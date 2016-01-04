@@ -1,0 +1,35 @@
+zstyle ':prezto:*:*' color 'yes'
+
+zstyle ':prezto:load' pmodule \
+  'completion' \
+  'directory' \
+  'editor' \
+  'environment' \
+  'git' \
+  'history' \
+  'prompt' \
+  'python' \
+  'utility'
+
+zstyle ':prezto:module:prompt' theme 'paradox_bs'
+
+zstyle ':prezto:module:editor' key-bindings 'emacs'
+zstyle ':prezto:module:editor' dot-expansion 'yes'
+
+
+zstyle ':prezto:module:terminal' auto-title 'yes'
+zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
+zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
+
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'cursor' \
+  'root'
+
+zstyle ':prezto:module:syntax-highlighting' styles \
+  'builtin' 'bg=blue' \
+  'command' 'bg=green' \
+  'function' 'bg=yellow'
+

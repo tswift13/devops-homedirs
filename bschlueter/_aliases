@@ -1,0 +1,173 @@
+# vi: set ft=zsh :
+
+# Vagrant
+alias vb='vagrant box'
+alias vd='vagrant destroy'
+alias vd!='vagrant destroy -f'
+alias vgs='vagrant global-status'
+alias vh='vagrant halt'
+alias vp='vagrant provision'
+alias vr='vagrant reload'
+alias vs='vagrant ssh'
+alias vu='vagrant up'
+alias vup='vagrant up --provision'
+alias vun='vagrant up --no-provision'
+alias vbu='vagrant box update'
+
+## Vagrant plugins
+### vbox-snapshot
+alias vst='vagrant snapshot take'
+alias vsl='vagrant snapshot list'
+alias vsb='vagrant snapshot back'
+alias vsd='vagrant snapshot delete'
+alias vsg='vagrant snapshot go'
+
+# Git
+alias ga='git add'
+alias gb='git branch'
+alias gbr='gb -r --no-merged'
+alias gc!='git commit -v --amend'
+alias gc='git commit -v'
+alias gca!='git commit -av --amend'
+alias gca='git commit -av'
+alias gcan!='git commit -avs --no-edit'
+alias gcb='git checkout -b'
+alias gcbr=git_current_branch
+alias gcf='git config --list'
+alias gch='git checkout HEAD'
+alias gcl='git clone --recursive'
+alias gclean='git clean -fd'
+alias gcm='gco $(gpbb)'
+alias gcml='git checkout master && git pull'
+alias gco='git checkout'
+alias gcol=git_checkout_and_pull
+alias gcop=git_checkout_pull_request
+alias gcp='git cherry-pick'
+alias gcul='git checkout master && git pull upstream master'
+alias gd='git diff'
+alias gds='git diff --stat'
+alias gdc='git diff --cached'
+alias gdcs='git diff --cached --stat'
+alias gdl!=git_force_delete_branch_local_and_origin
+alias gdl=git_delete_branch_local_and_origin
+alias gdt='git diff-tree --no-commit-id --name-only -r'
+alias gdu='git diff $(gpb)'
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+alias gfo='git fetch origin'
+alias ghi="glg --decorate=short --pretty=format:'%Cblue%ad%Creset %C(yellow)%h%Creset%C(red)%d%Creset | %s [%C(green)%an%Creset]' --date=short"
+alias gl='git pull'
+alias glg='git log --graph'
+alias glol="glg --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glola="glg --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all"
+alias glu='git pull origin $(gpbb)'
+alias gp!='git push -f'
+alias gp='git push'
+alias gpb=git_primary_branch
+alias gpbb=git_primary_branch_base
+alias gpristine='git reset --hard && git clean -dfx'
+alias grb='git rebase'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbi='git rebase -i'
+alias grbs='git rebase --skip'
+alias grbu='git rebase upstream/$(gpbb)'
+alias grh='git reset HEAD'
+alias grhh='git reset HEAD --hard'
+alias grm='git rm'
+alias gs='git status -s'
+alias gsb='git status -sb'
+alias gst='git status'
+alias gsup='git branch --set-upstream-to'
+alias gsupo='git branch --set-upstream-to=origin/$(git_current_branch)'
+alias gsupu='git branch --set-upstream-to=upstream/$(git_current_branch)'
+alias gt='git stash'
+alias gtp='git stash pop'
+
+## Hub aliases
+alias gppr='git push && git pull-request'
+alias gpr='git pull-request'
+alias gw='git browse'
+
+#!!! An alias doesn't work, use the function instead !!!
+git () { hub $@ }
+gdv() { git diff -w "$@" | view - }
+compdef _git gdv=git-diff
+gfg() { git ls-files | grep $@ }
+compdef gfg=grep
+git_current_branch () {
+  local ref
+  ref=$(git symbolic-ref --quiet HEAD 2> /dev/null)
+  local ret=$?
+  if [[ $ret != 0 ]]; then
+    [[ $ret == 128 ]] && return  # no git repo.
+    ref=$(git rev-parse --short HEAD 2> /dev/null) || return
+  fi
+  echo ${ref#refs/heads/}
+}
+git_checkout_and_pull () {
+  git checkout $1
+  git pull
+}
+git_delete_branch_local_and_origin () {
+  git branch --delete $1
+  git push origin :$1
+}
+git_force_delete_branch_local_and_origin () {
+  git branch -D $1
+  git push origin :$1
+}
+git_primary_branch () {
+  git rev-parse --symbolic-full-name origin
+}
+git_primary_branch_base () {
+  basename $(git_primary_branch)
+}
+git_checkout_pull_request () {
+  [[ -z "$3" ]] && remote=upstream || remote=$3
+  [[ -z "$2" ]] && branch=PR$1 || branch=$2
+  git fetch $remote pull/$1/head:$branch
+  git checkout $branch
+}
+
+# Vim-like
+alias :e=vim
+alias :q=exit
+
+# Random aliases
+alias .z='TASKS=1 source ~/.zshrc'
+alias agrep='alias | grep'
+alias allow='sudo xattr -d -r com.apple.quarantine'
+alias c='clear'
+alias car=create_ansible_role
+alias cpwd='pwd | pbcopy'
+alias fuck='sudo $(fc -ln -1)'
+alias ish='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias tt=travistest
+
+realpath() {
+    if [[ $1 = /* ]]
+    then
+        echo "$1"
+    else
+        echo "$PWD/${1#./}"
+    fi
+}
+
+git-cherry-pick-file () {
+    git cherry-pick -n $1
+    git reset HEAD
+    git add $2
+    git checkout $(git rev-parse --show-toplevel)
+}
+
+whichwhich() {
+  alias | awk -v alias=gca '$0 ~ alias {split($1, a, "="); gsub(/[\47]/, "", a[2]); print a[2]}' | xargs -n1 which
+}
+
+colors () {
+	for i in {0..255}
+	do
+		printf "\x1b[38;5;${i}mcolour${i}\n"
+	done
+}
