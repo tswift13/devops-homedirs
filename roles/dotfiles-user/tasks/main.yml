@@ -1,0 +1,14 @@
+---
+- name: Warn if no user specified
+  debug: msg="No user specified with the dotfiles_user var, only default files will be installed"
+  when: dotfiles_user is not defined
+
+- name: Install dotfiles
+  copy:
+    src={{ dotfiles_user | default('default') }}-{{ item }}
+    dest=~/.{{ item }}
+  with_items: dotfiles
+
+- name: Set zsh_user var
+  set_fact:
+    zsh_user: "{{ dotfiles_user }}"

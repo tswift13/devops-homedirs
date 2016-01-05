@@ -1,0 +1,21 @@
+---
+- hosts: all
+  vars:
+    prezto_repo: https://github.com/schlueter/prezto.git
+  vars:
+    dotfiles:
+    - aliases
+    - gitconfig
+    - gitignore_global
+    - pythonrc
+    - tmux.conf
+    - vimrc
+    - zlogin
+    - zlogout
+    - zpreztorc
+    - zshenv
+    - zshrc
+  roles:
+  - dotfiles-user
+  - vim-plug
+  - zsh-prezto

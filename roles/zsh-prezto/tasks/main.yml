@@ -1,0 +1,6 @@
+---
+- name: Install prezto
+  git:
+    repo={{ prezto_repo }}
+    dest=~/.zprezto
+    version=master

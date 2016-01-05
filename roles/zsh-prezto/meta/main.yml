@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Brandon Schlueter
+  description: Install prezto for zsh
+  company: Refinery29
+  license: MIT
+  min_ansible_version: 1.9.2
+  categories: []
+  platforms:
+  - name: Ubuntu
+    versions:
+    - 14.04+
+  - name: OS X
+    versions:
+    - 10.10
+    - 10.11
+
+dependencies:
+- role: zsh-user
