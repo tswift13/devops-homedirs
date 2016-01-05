@@ -2,7 +2,6 @@
 - hosts: all
   vars:
     prezto_repo: https://github.com/schlueter/prezto.git
-  vars:
     dotfiles:
     - aliases
     - gitconfig
