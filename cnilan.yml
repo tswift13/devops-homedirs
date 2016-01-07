@@ -1,0 +1,9 @@
+---
+- hosts: all
+  vars:
+    dotfiles: [bash_profile]
+    user: cnilan
+
+  roles:
+  - user-dotfiles
+

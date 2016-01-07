@@ -1,0 +1,18 @@
+# Opens bash profile
+alias bp='subl ~/.bash_profile'
+
+# Some aliases for great purpose!
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias go='git checkout'
+# shows last commit
+alias gl='git log -1 HEAD'
+alias gla='git log --pretty=oneline'
+alias gk='gitk --all&'
+alias gx='gitx --all'
+
+alias got='git '
+alias get='git '
