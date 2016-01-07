@@ -1,0 +1,12 @@
+---
+- name: Install dotfiles
+  copy:
+    src={{ user | default('default') }}-{{ item }}
+    dest=~/.{{ item }}
+  with_items: dotfiles
+
+- name: Download dotfiles
+  get_url:
+    dest=~/.{{ item | basename | regex_replace('[-_\.]?(?P<name>.+)', '\\g<name>') }}
+    url={{ item }}
+  with_items: dotfile_urls

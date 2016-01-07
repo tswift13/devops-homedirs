@@ -1,0 +1,6 @@
+---
+- name: Install oh-my-zsh
+  git:
+    repo={{ oh_my_zsh_repo }}
+    dest=~/.oh-my-zsh
+    version=master

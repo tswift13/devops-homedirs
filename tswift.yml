@@ -1,0 +1,12 @@
+---
+- hosts: all
+  vars:
+    dotfiles: []
+    dotfile_urls:
+    - https://raw.githubusercontent.com/schlueter/dotfiles/c78722da0410929a777d29b1185e94063ce38c7e/.zshrc
+    - https://raw.githubusercontent.com/schlueter/dotfiles/e0bbaa5e01ce2843d08a23c8ad1578cc7106c37a/.vimrc
+
+  roles:
+  - user-dotfiles
+  # - vim-vundle
+  - oh-my-zsh
