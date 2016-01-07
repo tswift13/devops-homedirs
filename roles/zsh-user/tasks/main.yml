@@ -1,21 +1,6 @@
 ---
-- name: Check for user argument
-  fail: msg="Supply a username to ansible-playbook with --extar-vars 'zsh_user=tswift'"
-  when: zsh_user is not defined
-
-- name: Check for user
-  command:
-    getent passwd {{ zsh_user }}
-  ignore_errors: yes
-  changed_when: no
-  register: passwd
-
-- name: Fail if user does not exist
-  fail: msg="User supplied as zsh_user does not exist."
-  when: passwd|failed
-
 - name: Set zsh as shell for user
   sudo: yes
   user:
-    name={{ zsh_user }}
+    name={{ user }}
     shell=/bin/zsh
