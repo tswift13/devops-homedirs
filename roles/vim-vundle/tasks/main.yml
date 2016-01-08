@@ -1,0 +1,11 @@
+---
+- name: Create vim bundle directory
+  file:
+    state=directory
+    path=~/.vim/bundle
+
+- name: Install plug for vim
+  git:
+    dest=~/.vim/bundle/Vundle.vim
+    repo=https://github.com/VundleVim/Vundle.vim.git
+    version=master
