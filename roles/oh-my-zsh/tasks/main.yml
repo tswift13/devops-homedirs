@@ -3,4 +3,4 @@
   git:
     repo={{ oh_my_zsh_repo }}
     dest=~/.oh-my-zsh
-    version=master
+    version={{ oh_my_zsh_repo_branch }}
