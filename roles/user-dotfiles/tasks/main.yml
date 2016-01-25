@@ -1,7 +1,12 @@
 ---
+- name: Set dotfiles user to user if unspecified
+  when: dotfiles_user is undefined
+  set_fact:
+    dotfiles_user: '{{ user }}'
+
 - name: Install dotfiles
   copy:
-    src={{ user | default('default') }}-{{ item }}
+    src={{ dotfiles_user | default('default') }}-{{ item }}
     dest=~/.{{ item }}
   with_items: dotfiles
 
@@ -9,4 +14,5 @@
   get_url:
     dest=~/.{{ item | basename | regex_replace('[-_\.]?(?P<name>.+)', '\\g<name>') }}
     url={{ item }}
+    force=yes
   with_items: dotfile_urls
