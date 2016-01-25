@@ -1,0 +1,11 @@
+---
+- name: Check for hub
+  command: which hub
+  ignore_errors: true
+  changed_when: false
+  register: which_hub
+
+- include: install.yml
+  become: yes
+  become_method: sudo
+  when: which_hub.rc == 1

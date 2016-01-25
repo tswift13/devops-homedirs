@@ -1,0 +1,34 @@
+---
+- name: Set hub binary url for Linux
+  when: ansible_system == "Linux"
+  set_fact:
+    hub_binary_filename: '{{ hub_linux_binary_filename }}'
+
+- name: Set hub binary url for OS X
+  set_fact:
+    hub_binary_filename: '{{ hub_darwin_binary_filename }}'
+  when: ansible_system == "Darwin"
+
+- name: Fail if hub_binary_filename not set
+  fail: msg='Could not determine system type for hub. Hub will not be installed.'
+  ignore_errors: true
+  when: hub_binary_filename is undefined
+
+- name: Download hub binary packages
+  get_url:
+    url={{ hub_binary_url_dir }}/{{ hub_binary_filename }}
+    dest=/tmp/
+  when: hub_binary_filename is defined
+
+- name: Extract hub package
+  unarchive:
+    src=/tmp/{{ hub_binary_filename }}
+    dest=/tmp/
+    copy=no
+  register: extracted_hub
+
+- name: Install hub
+  command:
+    /tmp/{{ hub_binary_filename | regex_replace('\.tgz', '') }}/install
+
+

@@ -1,0 +1,4 @@
+---
+hub_binary_url_dir: https://github.com/github/hub/releases/download/v2.2.2
+hub_darwin_binary_filename: hub-darwin-amd64-2.2.2.tgz
+hub_linux_binary_filename: hub-linux-amd64-2.2.2.tgz
